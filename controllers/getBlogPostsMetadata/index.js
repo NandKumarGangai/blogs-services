@@ -15,7 +15,7 @@ const getBlogPostsMetadataController = async (req, res) => {
         .then(results => {
             // const hostname = require("os").hostname();
 
-            const posts = results.map(result => {
+            const posts = results.filter(result => {
 
                 let post = {};
                 
@@ -37,15 +37,15 @@ const getBlogPostsMetadataController = async (req, res) => {
                     } catch (error) {
                         throw new Error({ message: 'Something went wrong....' })
                     }
+                    return post;
                 }
-                return post;
             });
 
             const params = {
                 status: status.SUCCESS,
                 response: {
                     posts,
-                    length: results.length
+                    length: posts.length
                 }
             }
             return genericResponseSender(res, params);

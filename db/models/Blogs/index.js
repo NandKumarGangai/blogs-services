@@ -37,6 +37,12 @@ const ThumbnailSchema = new Schema({
 });
 
 const BlogsSchema = new Schema({
+    // id: {
+    //     type: String,
+    //     unique: true,
+    //     required: true,
+    //     default: new Date().getTime()
+    // },
     title: {
         type: String,
         min: 1,
