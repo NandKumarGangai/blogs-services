@@ -36,7 +36,7 @@ const runServer = app => {
                 files.forEach((file) => {
                     filesList.push({
                         name: file,
-                        url: URL + file,
+                        url: `/${file}`,
                     });
                 });
                 

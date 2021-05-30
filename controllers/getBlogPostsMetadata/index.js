@@ -13,10 +13,10 @@ const isProduction = process.env.NODE_ENV === 'PRODUCTION';
 const getBlogPostsMetadataController = async (req, res) => {
     return Blogs.find({})
         .then(results => {
-            const hostname = require("os").hostname();
+            // const hostname = require("os").hostname();
 
             const posts = results.map(result => {
-                console.log('result: ', {...result._doc});
+
                 let post = {};
                 
                 const { thumbnail: {
@@ -25,7 +25,9 @@ const getBlogPostsMetadataController = async (req, res) => {
 
                 if (fs.existsSync(path.resolve('uploads/' + filename))) {
                     try {
-                        const thumbnailURL = `${isProduction ? 'https' : 'http'}://${hostname}:${process.env.PORT}/${filename}`;
+                        // const thumbnailURL = `${isProduction ? 'https' : 'http'}://${hostname}:${process.env.PORT}/${filename}`;
+                        const thumbnailURL = `/${filename}`;
+
                         delete result._doc.thumbnail;
                         post = {
                             ...result._doc,
