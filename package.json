@@ -20,8 +20,8 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "cross-env NODE_ENV=PRODUCTION node index.js",
+    "dev": "cross-env NODE_ENV=DEVELOPMENT nodemon index.js",
     "del": "rimraf D:\\study\\TYPESCRIPT\\ngangai-blog\\my-app\\node_modules"
   },
   "repository": {

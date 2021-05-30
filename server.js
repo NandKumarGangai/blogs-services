@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken');
 const compression = require('compression');
 const dbConnect = require('./db/connection');
 const routes = require('./routes');
+const fs = require('fs');
 
 require('dotenv').config();
+global.__basedir = __dirname;
 
 const PORT = process.env.PORT || 8000;
 
@@ -17,10 +19,31 @@ const runServer = app => {
     app.use(compression());
     app.use(express.json());
     app.use(express.static('dist'));
+    app.use(express.static('uploads'));
     app.use('/api/v1', routes);
 
-    app.get('/test', (req, res) => {
-        return res.send('pong')
+    app.get('/test', async (req, res) => {
+        const isProduction = process.env.NODE_ENV === 'PRODUCTION';
+        const hostname = require("os").hostname();
+        const URL = `${isProduction ? 'https' : 'http'}://${hostname}:${process.env.PORT}/`;
+
+        const getFilesList = async () => {
+            const uploadDirPath = path.resolve("./uploads/");
+
+            await fs.readdir(uploadDirPath, function (err, files) {
+                let filesList = [];
+                
+                files.forEach((file) => {
+                    filesList.push({
+                        name: file,
+                        url: URL + file,
+                    });
+                });
+                
+                res.send(filesList);
+            });
+        };
+        return await getFilesList();
     });
 
     app.post('/test', (req, res) => {

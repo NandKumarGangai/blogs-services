@@ -6,12 +6,18 @@ const {
     status
 } = require('../../utils');
 
+const allowedImageTypes = ['image/png', 'image/jpg'];
+
 const createNewBlogController = (req, res) => {
-
-    const body = _get(req, 'body', {});
-
     try {
-        const newBlog = new Blogs({ ...body });
+        const fileData = _get(req, 'file');
+
+        if(!fileData || allowedImageTypes.includes(fileData.mimetype) === -1) {
+            throw new Error({ message: 'Something went wrong'});
+        }
+
+        const body = JSON.parse(_get(req, 'body.document', {}));
+        const newBlog = new Blogs({ ...body, thumbnail: fileData });
 
         newBlog.save((err, response) => {
             if (err) {
