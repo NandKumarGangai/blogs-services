@@ -16,7 +16,7 @@ const runServer = app => {
     app.use(helmet());
     app.use(compression());
     app.use(express.json());
-    app.use(express.static('build'));
+    app.use(express.static('dist'));
     app.use('/api/v1', routes);
 
     app.get('/test', (req, res) => {
@@ -32,8 +32,8 @@ const runServer = app => {
     });
 
     app.get('/', (req, res) => {
-        // console.log('path: ', path.join(__dirname, 'build', 'index.html'))
-        // res.sendFile(path.join(__dirname, 'build', 'index.html'));
+        console.log('path: ', path.join(__dirname, 'dist', 'index.html'))
+        res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
 
     app.listen(PORT, () => {
