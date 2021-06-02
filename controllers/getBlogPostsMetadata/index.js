@@ -14,9 +14,9 @@ const getBlogPostsMetadataController = async (req, res) => {
     return Blogs.find({})
         .then(results => {
             // const hostname = require("os").hostname();
+            const posts = [];
 
-            const posts = results.filter(result => {
-
+            results.forEach( result => {
                 let post = {};
                 
                 const { thumbnail: {
@@ -31,15 +31,16 @@ const getBlogPostsMetadataController = async (req, res) => {
                         delete result._doc.thumbnail;
                         post = {
                             ...result._doc,
-                            thumbnailURL
+                            thumbnailURL: thumbnailURL
                         }
-                        // console.log('post: ', post);
+                        posts.push(post);
                     } catch (error) {
                         throw new Error({ message: 'Something went wrong....' })
                     }
-                    return post;
                 }
             });
+
+            // console.log('post: ', posts);
 
             const params = {
                 status: status.SUCCESS,

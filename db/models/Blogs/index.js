@@ -83,6 +83,9 @@ const BlogsSchema = new Schema({
         type: ThumbnailSchema,
         required: true
     },
+    thumbnailURL: {
+        type: String
+    },
     last_updated: {
         type: Date,
         default: new Date(),
